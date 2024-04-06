@@ -40,7 +40,7 @@ body {
 .emoji-list ul li {
   display: flex;
   cursor: pointer;
-  margin-inline-start: 2.5px;
+  margin-inline: 2.5px;
 }
 
 .emoji-list ul li button {
