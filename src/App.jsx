@@ -8,16 +8,14 @@ function App() {
   const [emojis, setEmojis] = useState([]);
   const [error, setError] = useState(null);
 
-  // fetch emojis
+  // fetch first 9 emojis from API
   useEffect(() => {
     const axiosConfig = {
-      headers: {
-        "X-Api-Key": "rSn9QzTwFZmUlbOTdeHprw==vzogjdyBVluAxAUU",
-      },
+      headers: { "X-Api-Key": "rSn9QzTwFZmUlbOTdeHprw==vzogjdyBVluAxAUU" },
     };
     axios
       .get(
-        `https://api.api-ninjas.com/v1/emoji?group=smileys_emotion`,
+        "https://api.api-ninjas.com/v1/emoji?group=smileys_emotion",
         axiosConfig
       )
       .then((res) => {
@@ -36,19 +34,20 @@ function App() {
 
   // emoji click
   const handleEmojiClick = (e, emoji) => {
-    // create elemnet to hold emoji
+    // create a new element to hold the emoji
     const emojiEl = document.createElement("div");
-    emojiEl.classList.add("emoji-animate");
     emojiEl.innerHTML = emoji.character;
+    emojiEl.classList.add("emoji-animate");
 
-    // append element in the emoji container
+    // append this new element into the emoji container
     emojiContainer.current.appendChild(emojiEl);
 
-    // get dynamic positions
+    // get dynamic position
     const { height, left } = e.target.getBoundingClientRect();
-    const { bottom, top, width } = emojiContainer.current.getBoundingClientRect();
+    const { bottom, top, width } =
+      emojiContainer.current.getBoundingClientRect();
 
-    // animation 🍃
+    // animation
     const animation = emojiEl.animate(
       [
         { opacity: 1, transform: `translate(${left}px, ${bottom}px)` },
@@ -76,7 +75,7 @@ function App() {
         ) : (
           <>
             {error ? (
-              <h5>Could not fetch emojis</h5>
+              <h5>{error}</h5>
             ) : (
               <>
                 {emojis.length > 0 ? (
@@ -84,6 +83,7 @@ function App() {
                     {emojis.map((emoji, index) => (
                       <li key={index}>
                         <button
+                          type="button"
                           aria-label={emoji.name}
                           onClick={(e) => handleEmojiClick(e, emoji)}
                         >
@@ -93,7 +93,7 @@ function App() {
                     ))}
                   </ul>
                 ) : (
-                  <h5>No emojis found</h5>
+                  <h5>No emoji found</h5>
                 )}
               </>
             )}
